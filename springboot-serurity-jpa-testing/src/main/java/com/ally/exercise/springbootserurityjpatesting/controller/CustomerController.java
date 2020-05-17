@@ -26,7 +26,6 @@ public class CustomerController {
 
 		// System.out.println(jsonProperties.getHost());
 		List<Customer> customers = customerService.getAllCustomers();
-		System.out.println(customers.size());
 		return new ResponseEntity<>(customers, HttpStatus.OK);
 	}
 
