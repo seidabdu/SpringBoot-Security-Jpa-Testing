@@ -61,7 +61,7 @@ public class AuthorizationTest extends AbstractMvcTest {
 				.andDo(MockMvcResultHandlers.print()).andReturn();
 
 		System.out.println(result.getResponse().getContentAsString());
-		assertEquals("hellow world", result.getResponse().getContentAsString());
+		assertEquals("hello world", result.getResponse().getContentAsString());
 	}
 
 	// @Test

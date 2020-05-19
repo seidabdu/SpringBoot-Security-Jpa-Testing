@@ -1,4 +1,4 @@
-package com.ally.exercise.springbootserurityjpatesting.controller;
+/*package com.ally.exercise.springbootserurityjpatesting.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -49,3 +49,4 @@ public class AuthenticationTest extends AbstractMvcTest {
 						+ "\"}"));
 	}
 }
+*/

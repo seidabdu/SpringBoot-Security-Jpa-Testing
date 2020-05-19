@@ -1,5 +1,7 @@
 package com.ally.exercise.springbootserurityjpatesting.controller;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.ally.exercise.springbootserurityjpatesting.repository.CustomerRepository;
+import com.ally.exercise.springbootserurityjpatesting.service.JwtUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HelloControllerTest {
+public class HelloControllerTest extends AbstractMvcTest {
 
 	@LocalServerPort
 	private int port;
@@ -27,26 +31,30 @@ public class HelloControllerTest {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	HttpHeaders headers = new HttpHeaders();
+
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@Autowired
+	private JwtUserDetailsService JwtUserDetailsService;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Test
 	public void testGetHello() throws Exception {
+
+		final String token = extractToken(login("seid", "seid").andReturn());
+		headers.add("Authorization", "Bearer " + token);
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/ally/hello"), HttpMethod.GET, entity,
+				createURLWithPort("/hello"), HttpMethod.GET, entity,
 				String.class);
 
-		// String actual =
-		// response.getHeaders().get(HttpHeaders.LOCATION).get(0);
+		System.out.println("Body of the response--->" + response.getBody());
 
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println(response.getBody());
-		System.out
-				.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-		// assertTrue(actual.contains("/ally/hello"));
+		assertEquals("hello world", response.getBody());
 	}
 
 	private String createURLWithPort(String uri) {

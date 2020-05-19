@@ -21,6 +21,7 @@ target/
 
 # Java related
 target/**
+logs/**
 *.jar
 *.war
 *.ear
